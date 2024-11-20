@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 7.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon32X32.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon32X32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon32X32.ico">
+  <link rel="mask-icon" href="/blog/images/favicon32X32.ico" color="#222">
 
 <link rel="stylesheet" href="/blog/css/main.css">
 
@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"simplekalvin.github.io","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="MySQL 原理MySQL 逻辑架构MySQL 采用 CS 架构，及客户端与服务器架构。 12345678910111213141516graph LRsubgraph 第一层A[客户端]endsubgraph 第二层A--&gt; C[连接&#x2F;线程处理]C--&gt; D[解析器]D--&gt;E[优化器]endsubgraph 第三层E--&gt;F[存储引擎]end  第一层客户端连接大多数基">
+  <meta name="description" content="MySQL 原理MySQL 逻辑架构MySQL 采用 CS 架构，及客户端与服务器架构。 graph LR subgraph 第一层 A[客户端] end subgraph 第二层  A--&gt; C[连接&#x2F;线程处理] C--&gt; D[解析器] D--&gt;E[优化器] end   subgraph 第三层 E--&gt;F[存储引擎]  end  第一层客户端连接大多数基于 CS 结构都有类似的服务。MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL原理">
 <meta property="og:url" content="https://simplekalvin.github.io/blog/2024/03/30/2024-03-30/index.html">
 <meta property="og:site_name" content="Kalvin&#39;s Blog">
-<meta property="og:description" content="MySQL 原理MySQL 逻辑架构MySQL 采用 CS 架构，及客户端与服务器架构。 12345678910111213141516graph LRsubgraph 第一层A[客户端]endsubgraph 第二层A--&gt; C[连接&#x2F;线程处理]C--&gt; D[解析器]D--&gt;E[优化器]endsubgraph 第三层E--&gt;F[存储引擎]end  第一层客户端连接大多数基">
+<meta property="og:description" content="MySQL 原理MySQL 逻辑架构MySQL 采用 CS 架构，及客户端与服务器架构。 graph LR subgraph 第一层 A[客户端] end subgraph 第二层  A--&gt; C[连接&#x2F;线程处理] C--&gt; D[解析器] D--&gt;E[优化器] end   subgraph 第三层 E--&gt;F[存储引擎]  end  第一层客户端连接大多数基于 CS 结构都有类似的服务。MySQL">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-03-30T06:13:05.000Z">
-<meta property="article:modified_time" content="2024-11-20T03:01:50.846Z">
+<meta property="article:modified_time" content="2024-11-20T08:05:18.705Z">
 <meta property="article:author" content="Kalvin">
 <meta name="twitter:card" content="summary">
 
@@ -158,7 +158,7 @@
     <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2024/03/30/2024-03-30/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
       <meta itemprop="name" content="Kalvin">
       <meta itemprop="description" content="Golang,PHP Developer">
     </span>
@@ -185,7 +185,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-11-20 11:01:50" itemprop="dateModified" datetime="2024-11-20T11:01:50+08:00">2024-11-20</time>
+                <time title="Modified: 2024-11-20 16:05:18" itemprop="dateModified" datetime="2024-11-20T16:05:18+08:00">2024-11-20</time>
               </span>
 
           
@@ -200,7 +200,22 @@
 
       
         <h1 id="MySQL-原理"><a href="#MySQL-原理" class="headerlink" title="MySQL 原理"></a>MySQL 原理</h1><h2 id="MySQL-逻辑架构"><a href="#MySQL-逻辑架构" class="headerlink" title="MySQL 逻辑架构"></a>MySQL 逻辑架构</h2><p>MySQL 采用 CS 架构，及客户端与服务器架构。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">subgraph 第一层</span><br><span class="line">A[客户端]</span><br><span class="line">end</span><br><span class="line">subgraph 第二层</span><br><span class="line"></span><br><span class="line">A--&gt; C[连接/线程处理]</span><br><span class="line">C--&gt; D[解析器]</span><br><span class="line">D--&gt;E[优化器]</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">subgraph 第三层</span><br><span class="line">E--&gt;F[存储引擎]</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph LR
+subgraph 第一层
+A[客户端]
+end
+subgraph 第二层
+
+A--> C[连接/线程处理]
+C--> D[解析器]
+D-->E[优化器]
+end
+
+
+subgraph 第三层
+E-->F[存储引擎]
+
+end</pre>
 
 <p>第一层客户端连接大多数基于 CS 结构都有类似的服务。MySQL 大多数核心功能都在这层，包含<strong>查询解析</strong>，<strong>分析</strong>，<strong>优化</strong>以及所有<strong>内置函数</strong>（日期，时间，加密函数），<strong>存储过程</strong>，<strong>触发器</strong>，<strong>视图</strong>。第三层是存储引擎</p>
 <h3 id="并发控制-锁"><a href="#并发控制-锁" class="headerlink" title="并发控制-锁"></a>并发控制-锁</h3><h4 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h4><p>MySQL 读写锁分为<strong>共享锁</strong>（_读锁_）和<strong>排它锁</strong>（_写锁_）两种。读锁顾名思义，在资源的读取上时共享的，多个客户端同时对同一个资源进行读取，互不干扰，也互不阻塞。写锁（排它锁），当持有一个数据资源的写锁时既会阻塞读锁又阻塞其他客户端的读取。这样在同时操作数据的时候就保护了资源防止被覆盖的问题从而保障了数据的安全。</p>
@@ -288,6 +303,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kalvin"
+      src="/blog/images/avatar.jpeg">
   <p class="site-author-name" itemprop="name">Kalvin</p>
   <div class="site-description" itemprop="description">Golang,PHP Developer</div>
 </div>
@@ -302,6 +319,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simpleKalvin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simpleKalvin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -378,6 +400,19 @@
 
 
 
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
 
 
   
