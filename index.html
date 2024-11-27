@@ -178,7 +178,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-11-27 10:07:33 / Modified: 16:13:52" itemprop="dateCreated datePublished" datetime="2024-11-27T10:07:33+08:00">2024-11-27</time>
+              <time title="Created: 2024-11-27 10:07:33 / Modified: 16:24:29" itemprop="dateCreated datePublished" datetime="2024-11-27T10:07:33+08:00">2024-11-27</time>
             </span>
 
           
@@ -200,6 +200,9 @@
 <h3 id="启动方法"><a href="#启动方法" class="headerlink" title="启动方法"></a>启动方法</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Run attaches the router to a http.Server and starts listening and serving HTTP requests.</span></span><br><span class="line"><span class="comment">// It is a shortcut for http.ListenAndServe(addr, router)</span></span><br><span class="line"><span class="comment">// Note: this method will block the calling goroutine indefinitely unless an error happens.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(engine *Engine)</span></span> Run(addr ...<span class="type">string</span>) (err <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; debugPrintError(err) &#125;()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> engine.isUnsafeTrustedProxies() &#123;</span><br><span class="line">		debugPrint(<span class="string">&quot;[WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.\n&quot;</span> +</span><br><span class="line">			<span class="string">&quot;Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	address := resolveAddress(addr)</span><br><span class="line">	debugPrint(<span class="string">&quot;Listening and serving HTTP on %s\n&quot;</span>, address)</span><br><span class="line">	err = http.ListenAndServe(address, engine.Handler())</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>实际调用还是http&#x2F;net的服务启动方法。</p>
+<h3 id="路由流程"><a href="#路由流程" class="headerlink" title="路由流程"></a>路由流程</h3><p>    调用对应的请求方式(eg. Ge、Post、Put、Delete等)，基于请求的path和方法体绑定到engine的trees中。</p>
+<h3 id="匹配流程"><a href="#匹配流程" class="headerlink" title="匹配流程"></a>匹配流程</h3><p>    请求到来，engine实现了net&#x2F;http的 <strong>ServeHTTP</strong>方法。最后调用到<strong>engine</strong>的<strong>handleHTTPRequest</strong>方法，基于请求类型+路由进行树状的寻址</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><strong>Gin</strong>和<strong>Beego</strong>对于路由实现上大家大同小异，都是采用<strong>树状结构</strong>，且都是基于<strong>ServeHTTP</strong>触发路由寻址</p>
 
       
     </div>
