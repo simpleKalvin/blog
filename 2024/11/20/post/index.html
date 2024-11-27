@@ -29,7 +29,7 @@
 <meta property="og:description" content="基本概念 HttpServer  基于 http.Server 的封装，内嵌有路由注册、配置、生命周期钩子等程序   ControllerRegister【这个为核心】  路由注册类，用于路由树的建立。   Config  配置类用于配置处理   LifeCycleCallback  生命周期钩子，用于在服务启动时，服务关闭时，进行一些操作   Service【最底层实现网络服务的类】  net">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-11-20T02:54:35.000Z">
-<meta property="article:modified_time" content="2024-11-26T09:05:55.615Z">
+<meta property="article:modified_time" content="2024-11-27T02:07:54.079Z">
 <meta property="article:author" content="Kalvin">
 <meta name="twitter:card" content="summary">
 
@@ -186,7 +186,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-11-26 17:05:55" itemprop="dateModified" datetime="2024-11-26T17:05:55+08:00">2024-11-26</time>
+                <time title="Modified: 2024-11-27 10:07:54" itemprop="dateModified" datetime="2024-11-27T10:07:54+08:00">2024-11-27</time>
               </span>
 
           
@@ -235,9 +235,7 @@
 <h2 id="ControllerInfo"><a href="#ControllerInfo" class="headerlink" title="ControllerInfo"></a>ControllerInfo</h2><blockquote>
 <p>路由对应的关联的控制器</p>
 </blockquote>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> beego</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/beego/beego/v2/server/web&quot;</span></span><br><span class="line">	<span class="string">&quot;testing&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestUserController</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	<span class="comment">// go func() &#123;</span></span><br><span class="line">	<span class="comment">// 	s := web.NewHttpSever()</span></span><br><span class="line">	<span class="comment">// 	s.Run(&quot;:8082&quot;)</span></span><br><span class="line">	<span class="comment">// &#125;()</span></span><br><span class="line">	web.BConfig.CopyRequestBody = <span class="literal">true</span></span><br><span class="line">	c := &amp;UserController&#123;&#125;</span><br><span class="line">	web.Router(<span class="string">&quot;/user&quot;</span>, c, <span class="string">&quot;get:GetUser&quot;</span>)</span><br><span class="line">	<span class="comment">// 监听 8081 端口</span></span><br><span class="line">	web.Run(<span class="string">&quot;:8081&quot;</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> beego</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;github.com/beego/beego/v2/server/web&quot;</span></span><br><span class="line">    <span class="string">&quot;testing&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestUserController</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">    <span class="comment">// go func() &#123;</span></span><br><span class="line">    <span class="comment">//     s := web.NewHttpSever()</span></span><br><span class="line">    <span class="comment">//     s.Run(&quot;:8082&quot;)</span></span><br><span class="line">    <span class="comment">// &#125;()</span></span><br><span class="line">    web.BConfig.CopyRequestBody = <span class="literal">true</span></span><br><span class="line">    c := &amp;UserController&#123;&#125;</span><br><span class="line">    web.Router(<span class="string">&quot;/user&quot;</span>, c, <span class="string">&quot;get:GetUser&quot;</span>)</span><br><span class="line">    <span class="comment">// 监听 8081 端口</span></span><br><span class="line">    web.Run(<span class="string">&quot;:8081&quot;</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>执行流程</p>
 <pre class="mermaid">graph TB
@@ -273,7 +271,10 @@ E-->F</pre>
     <a href="/blog/2024/03/30/2024-03-30/" rel="prev" title="MySQL原理">
       <i class="fa fa-chevron-left"></i> MySQL原理
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/blog/2024/11/27/post/" rel="next" title="GinWeb框架原理">
+      GinWeb框架原理 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -348,7 +349,7 @@ E-->F</pre>
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
