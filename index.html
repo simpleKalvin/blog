@@ -223,6 +223,91 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2024/03/30/2024-03-30/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
+      <meta itemprop="name" content="Kalvin">
+      <meta itemprop="description" content="Golang,PHP Developer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kalvin's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/03/30/2024-03-30/" class="post-title-link" itemprop="url">MySQL原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-03-30 14:13:05" itemprop="dateCreated datePublished" datetime="2024-03-30T14:13:05+08:00">2024-03-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-06-24 18:30:30" itemprop="dateModified" datetime="2025-06-24T18:30:30+08:00">2025-06-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="MySQL-原理"><a href="#MySQL-原理" class="headerlink" title="MySQL 原理"></a>MySQL 原理</h1><h2 id="MySQL-逻辑架构"><a href="#MySQL-逻辑架构" class="headerlink" title="MySQL 逻辑架构"></a>MySQL 逻辑架构</h2><p>MySQL 采用 CS 架构，及客户端与服务器架构。</p>
+<pre class="mermaid">graph LR
+subgraph 第一层
+A[客户端]
+end
+subgraph 第二层
+
+A--> C[连接/线程处理]
+C--> D[解析器]
+D-->E[优化器]
+end
+
+
+subgraph 第三层
+E-->F[存储引擎]
+
+end</pre>
+
+<p>第一层客户端连接大多数基于 CS 结构都有类似的服务。MySQL 大多数核心功能都在这层，包含<strong>查询解析</strong>，<strong>分析</strong>，<strong>优化</strong>以及所有<strong>内置函数</strong>（日期，时间，加密函数），<strong>存储过程</strong>，<strong>触发器</strong>，<strong>视图</strong>。第三层是存储引擎</p>
+<h3 id="并发控制-锁"><a href="#并发控制-锁" class="headerlink" title="并发控制-锁"></a>并发控制-锁</h3><h4 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h4><p>MySQL 读写锁分为<strong>共享锁</strong>（_读锁_）和<strong>排它锁</strong>（_写锁_）两种。读锁顾名思义，在资源的读取上时共享的，多个客户端同时对同一个资源进行读取，互不干扰，也互不阻塞。写锁（排它锁），当持有一个数据资源的写锁时既会阻塞读锁又阻塞其他客户端的读取。这样在同时操作数据的时候就保护了资源防止被覆盖的问题从而保障了数据的安全。</p>
+<p>想象下，在一个 100 人的公司内，有个填写报名下周一团建的<strong>腾讯在线文档</strong>，每人去填写自己的名字，但是同时打开页面的时候发现别的都没有写于是开始写上自己的名字，猜猜看如果没有锁最后的结果会是怎么样？最后提交的数据就只有一条，名字就是最后提交的人。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
 
@@ -291,7 +376,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
