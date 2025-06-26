@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 7.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon32X32.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon32X32.ico">
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon32X32.ico">
-  <link rel="mask-icon" href="/blog/images/favicon32X32.ico" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/blog/images/favicon-32x32.png" color="#222">
 
 <link rel="stylesheet" href="/blog/css/main.css">
 
 
 <link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"simplekalvin.github.io","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"simplekalvin.github.io","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="基本概念 HttpServer  ControllerRegister  Config  LifeCycleCallback">
@@ -158,7 +159,7 @@
     <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2024/11/20/post/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.jpeg">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
       <meta itemprop="name" content="Kalvin">
       <meta itemprop="description" content="Golang,PHP Developer">
     </span>
@@ -228,7 +229,10 @@
     <a href="/blog/2024/03/30/2024-03-30/" rel="prev" title="MySQL原理">
       <i class="fa fa-chevron-left"></i> MySQL原理
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/blog/2025/06/24/flink-user-layer/" rel="next" title="flink 用户分层实战">
+      flink 用户分层实战 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -294,7 +298,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Kalvin"
-      src="/blog/images/avatar.jpeg">
+      src="/blog/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Kalvin</p>
   <div class="site-description" itemprop="description">Golang,PHP Developer</div>
 </div>
@@ -303,7 +307,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -360,6 +364,8 @@
 
   
   <script src="/blog/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/blog/lib/velocity/velocity.min.js"></script>
   <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
 
