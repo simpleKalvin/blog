@@ -21,19 +21,22 @@
     var CONFIG = {"hostname":"simplekalvin.github.io","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="MySQL 原理MySQL 逻辑架构MySQL 采用 CS 架构，及客户端与服务器架构。 graph LR subgraph 第一层 A[客户端] end subgraph 第二层  A--&gt; C[连接&#x2F;线程处理] C--&gt; D[解析器] D--&gt;E[优化器] end   subgraph 第三层 E--&gt;F[存储引擎]  end  第一层客户端连接大多数基于 CS 结构都有类似的服务。MySQL">
+  <meta name="description" content="laravel 启动原理graph TB     subgraph 入口阶段         A[&quot;public&#x2F;index.php&quot;] --&gt; B[&quot;检查维护模式(maintenance.php)&quot;]         B --&gt;|否| C[&quot;加载 Composer 自动加载器(vendor&#x2F;autoload.php)&quot;]         C --&gt; D[&quot;创建应用实例(bootstrap&#x2F;app">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL原理">
-<meta property="og:url" content="https://simplekalvin.github.io/blog/2024/03/30/2024-03-30/index.html">
+<meta property="og:title" content="laravel 启动原理">
+<meta property="og:url" content="https://simplekalvin.github.io/blog/2025/06/28/laravel-process/index.html">
 <meta property="og:site_name" content="Kalvin&#39;s Blog">
-<meta property="og:description" content="MySQL 原理MySQL 逻辑架构MySQL 采用 CS 架构，及客户端与服务器架构。 graph LR subgraph 第一层 A[客户端] end subgraph 第二层  A--&gt; C[连接&#x2F;线程处理] C--&gt; D[解析器] D--&gt;E[优化器] end   subgraph 第三层 E--&gt;F[存储引擎]  end  第一层客户端连接大多数基于 CS 结构都有类似的服务。MySQL">
+<meta property="og:description" content="laravel 启动原理graph TB     subgraph 入口阶段         A[&quot;public&#x2F;index.php&quot;] --&gt; B[&quot;检查维护模式(maintenance.php)&quot;]         B --&gt;|否| C[&quot;加载 Composer 自动加载器(vendor&#x2F;autoload.php)&quot;]         C --&gt; D[&quot;创建应用实例(bootstrap&#x2F;app">
 <meta property="og:locale">
-<meta property="article:published_time" content="2024-03-30T06:13:05.000Z">
-<meta property="article:modified_time" content="2025-06-24T10:30:30.485Z">
+<meta property="article:published_time" content="2025-06-28T00:53:07.000Z">
+<meta property="article:modified_time" content="2025-06-28T00:53:49.472Z">
 <meta property="article:author" content="Kalvin">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="laravel">
+<meta property="article:tag" content="框架">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://simplekalvin.github.io/blog/2024/03/30/2024-03-30/">
+<link rel="canonical" href="https://simplekalvin.github.io/blog/2025/06/28/laravel-process/">
 
 
 <script id="page-configurations">
@@ -46,7 +49,7 @@
   };
 </script>
 
-  <title>MySQL原理 | Kalvin's Blog</title>
+  <title>laravel 启动原理 | Kalvin's Blog</title>
   
 
 
@@ -156,7 +159,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2024/03/30/2024-03-30/">
+    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2025/06/28/laravel-process/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -169,7 +172,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          MySQL原理
+          laravel 启动原理
         </h1>
 
         <div class="post-meta">
@@ -178,16 +181,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2024-03-30 14:13:05" itemprop="dateCreated datePublished" datetime="2024-03-30T14:13:05+08:00">2024-03-30</time>
+              <time title="Created: 2025-06-28 08:53:07 / Modified: 08:53:49" itemprop="dateCreated datePublished" datetime="2025-06-28T08:53:07+08:00">2025-06-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-06-24 18:30:30" itemprop="dateModified" datetime="2025-06-24T18:30:30+08:00">2025-06-24</time>
-              </span>
 
           
 
@@ -200,27 +197,49 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="MySQL-原理"><a href="#MySQL-原理" class="headerlink" title="MySQL 原理"></a>MySQL 原理</h1><h2 id="MySQL-逻辑架构"><a href="#MySQL-逻辑架构" class="headerlink" title="MySQL 逻辑架构"></a>MySQL 逻辑架构</h2><p>MySQL 采用 CS 架构，及客户端与服务器架构。</p>
-<pre class="mermaid">graph LR
-subgraph 第一层
-A[客户端]
-end
-subgraph 第二层
+        <h1 id="laravel-启动原理"><a href="#laravel-启动原理" class="headerlink" title="laravel 启动原理"></a>laravel 启动原理</h1><pre class="mermaid">graph TB
+    subgraph 入口阶段
+        A["public/index.php"] --> B["检查维护模式<br>(maintenance.php)"]
+        B -->|否| C["加载 Composer 自动加载器<br>(vendor/autoload.php)"]
+        C --> D["创建应用实例<br>(bootstrap/app.php)"]
+    end
 
-A--> C[连接/线程处理]
-C--> D[解析器]
-D-->E[优化器]
-end
+    subgraph 应用初始化
+        D --> E["实例化 Illuminate\\Foundation\\Application"]
+        E --> F["注册基础绑定<br>(容器、日志、异常处理)"]
+        F --> G["注册核心服务提供者<br>(EventServiceProvider, <br>RoutingServiceProvider)"]
+        G --> H["执行引导类<br>(bootstrapWith())"]
+    end
 
+    subgraph 引导阶段
+        H --> I["DetectEnvironment<br>(加载.env)"]
+        I --> J["LoadConfiguration<br>(加载config目录)"]
+        J --> K["HandleExceptions<br>(注册全局异常处理)"]
+        K --> L["RegisterFacades<br>(门面静态代理)"]
+        L --> M["RegisterProviders<br>(注册config/app.php中的服务提供者)"]
+        M --> N["BootProviders<br>(调用所有服务提供者的boot())"]
+    end
 
-subgraph 第三层
-E-->F[存储引擎]
+    subgraph 请求处理
+        N --> O["创建HTTP Kernel<br>(App\\Http\\Kernel)"]
+        O --> P["加载中间件<br>(全局/路由中间件)"]
+        P --> Q["Request::capture()<br>(捕获HTTP请求)"]
+        Q --> R["Pipeline处理请求<br>(中间件栈前置操作)"]
+        R --> S["路由匹配与分发<br>(Router→Controller)"]
+        S --> T["Pipeline处理响应<br>(中间件栈后置操作)"]
+    end
 
-end</pre>
+    subgraph 响应结束
+        T --> U["生成Response对象"]
+        U --> V["$response->send()<br>(发送响应至客户端)"]
+        V --> W["$kernel->terminate()<br>(清理资源)"]
+    end
 
-<p>第一层客户端连接大多数基于 CS 结构都有类似的服务。MySQL 大多数核心功能都在这层，包含<strong>查询解析</strong>，<strong>分析</strong>，<strong>优化</strong>以及所有<strong>内置函数</strong>（日期，时间，加密函数），<strong>存储过程</strong>，<strong>触发器</strong>，<strong>视图</strong>。第三层是存储引擎</p>
-<h3 id="并发控制-锁"><a href="#并发控制-锁" class="headerlink" title="并发控制-锁"></a>并发控制-锁</h3><h4 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h4><p>MySQL 读写锁分为<strong>共享锁</strong>（_读锁_）和<strong>排它锁</strong>（_写锁_）两种。读锁顾名思义，在资源的读取上时共享的，多个客户端同时对同一个资源进行读取，互不干扰，也互不阻塞。写锁（排它锁），当持有一个数据资源的写锁时既会阻塞读锁又阻塞其他客户端的读取。这样在同时操作数据的时候就保护了资源防止被覆盖的问题从而保障了数据的安全。</p>
-<p>想象下，在一个 100 人的公司内，有个填写报名下周一团建的<strong>腾讯在线文档</strong>，每人去填写自己的名字，但是同时打开页面的时候发现别的都没有写于是开始写上自己的名字，猜猜看如果没有锁最后的结果会是怎么样？最后提交的数据就只有一条，名字就是最后提交的人。</p>
+    style 入口阶段 fill:#e1f5fe,stroke:#039be5
+    style 应用初始化 fill:#ffecb3,stroke:#ffc107
+    style 引导阶段 fill:#c8e6c9,stroke:#4caf50
+    style 请求处理 fill:#bbdefb,stroke:#2196f3
+    style 响应结束 fill:#ffccbc,stroke:#ff5722</pre>
 
     </div>
 
@@ -229,17 +248,22 @@ end</pre>
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/php/" rel="tag"># php</a>
+              <a href="/blog/tags/laravel/" rel="tag"># laravel</a>
+              <a href="/blog/tags/%E6%A1%86%E6%9E%B6/" rel="tag"># 框架</a>
+          </div>
 
         
 
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/blog/2024/11/20/post/" rel="next" title="BeegoWeb框架原理">
-      BeegoWeb框架原理 <i class="fa fa-chevron-right"></i>
+    <a href="/blog/2025/06/28/php-goroutine-process/" rel="prev" title="php-swoole 协程原理">
+      <i class="fa fa-chevron-left"></i> php-swoole 协程原理
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -298,7 +322,7 @@ end</pre>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL-%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">MySQL 原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">MySQL 逻辑架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6-%E9%94%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">并发控制-锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E9%94%81"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">读写锁</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#laravel-%E5%90%AF%E5%8A%A8%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">laravel 启动原理</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -153,6 +153,587 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2025/06/28/laravel-process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Kalvin">
+      <meta itemprop="description" content="Golang,PHP Developer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kalvin's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2025/06/28/laravel-process/" class="post-title-link" itemprop="url">laravel 启动原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-06-28 08:53:07 / Modified: 08:53:49" itemprop="dateCreated datePublished" datetime="2025-06-28T08:53:07+08:00">2025-06-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="laravel-启动原理"><a href="#laravel-启动原理" class="headerlink" title="laravel 启动原理"></a>laravel 启动原理</h1><pre class="mermaid">graph TB
+    subgraph 入口阶段
+        A["public/index.php"] --> B["检查维护模式<br>(maintenance.php)"]
+        B -->|否| C["加载 Composer 自动加载器<br>(vendor/autoload.php)"]
+        C --> D["创建应用实例<br>(bootstrap/app.php)"]
+    end
+
+    subgraph 应用初始化
+        D --> E["实例化 Illuminate\\Foundation\\Application"]
+        E --> F["注册基础绑定<br>(容器、日志、异常处理)"]
+        F --> G["注册核心服务提供者<br>(EventServiceProvider, <br>RoutingServiceProvider)"]
+        G --> H["执行引导类<br>(bootstrapWith())"]
+    end
+
+    subgraph 引导阶段
+        H --> I["DetectEnvironment<br>(加载.env)"]
+        I --> J["LoadConfiguration<br>(加载config目录)"]
+        J --> K["HandleExceptions<br>(注册全局异常处理)"]
+        K --> L["RegisterFacades<br>(门面静态代理)"]
+        L --> M["RegisterProviders<br>(注册config/app.php中的服务提供者)"]
+        M --> N["BootProviders<br>(调用所有服务提供者的boot())"]
+    end
+
+    subgraph 请求处理
+        N --> O["创建HTTP Kernel<br>(App\\Http\\Kernel)"]
+        O --> P["加载中间件<br>(全局/路由中间件)"]
+        P --> Q["Request::capture()<br>(捕获HTTP请求)"]
+        Q --> R["Pipeline处理请求<br>(中间件栈前置操作)"]
+        R --> S["路由匹配与分发<br>(Router→Controller)"]
+        S --> T["Pipeline处理响应<br>(中间件栈后置操作)"]
+    end
+
+    subgraph 响应结束
+        T --> U["生成Response对象"]
+        U --> V["$response->send()<br>(发送响应至客户端)"]
+        V --> W["$kernel->terminate()<br>(清理资源)"]
+    end
+
+    style 入口阶段 fill:#e1f5fe,stroke:#039be5
+    style 应用初始化 fill:#ffecb3,stroke:#ffc107
+    style 引导阶段 fill:#c8e6c9,stroke:#4caf50
+    style 请求处理 fill:#bbdefb,stroke:#2196f3
+    style 响应结束 fill:#ffccbc,stroke:#ff5722</pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2025/06/28/php-goroutine-process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Kalvin">
+      <meta itemprop="description" content="Golang,PHP Developer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kalvin's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2025/06/28/php-goroutine-process/" class="post-title-link" itemprop="url">php-swoole 协程原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-06-28 08:40:27 / Modified: 08:51:20" itemprop="dateCreated datePublished" datetime="2025-06-28T08:40:27+08:00">2025-06-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="php-swoole-协程原理"><a href="#php-swoole-协程原理" class="headerlink" title="php-swoole 协程原理"></a>php-swoole 协程原理</h1><pre class="mermaid">graph TB
+    subgraph 初始化阶段[初始化阶段]
+        A[启动 Swoole 服务] --> B["创建协程容器<br>(Coroutine\\run())"]
+        B --> C["初始化事件循环<br>(EventLoop)"]
+    end
+
+    subgraph 协程创建阶段[协程创建]
+        D[事件触发] --> E["创建新协程<br>(如 onRequest/onReceive)"]
+        E --> F["保存当前执行上下文<br>(ZendVM 堆栈/寄存器)"]
+    end
+
+    subgraph IO处理阶段[IO 操作与调度]
+        F --> G{遇到 IO 操作?}
+        G -->|是| H["挂起当前协程<br>(yield)"]
+        H --> I[注册 IO 事件到 EventLoop]
+        I --> J[切换至其他就绪协程]
+        G -->|否| K[同步执行代码]
+    end
+
+    subgraph 调度器工作[调度器事件循环]
+        J --> L[EventLoop 监听 IO 事件]
+        L --> M{IO 完成?}
+        M -->|是| N["恢复对应协程<br>(resume)"]
+        N --> O[从挂起点继续执行]
+        M -->|否| L
+    end
+
+    subgraph 结果处理[协程结束]
+        O --> P[返回结果/释放资源]
+        P --> Q[销毁协程上下文]
+    end
+
+    style 初始化阶段 fill:#e1f5fe,stroke:#039be5
+    style 协程创建阶段 fill:#ffecb3,stroke:#ffc107
+    style IO处理阶段 fill:#c8e6c9,stroke:#4caf50
+    style 调度器工作 fill:#bbdefb,stroke:#2196f3
+    style 结果处理 fill:#ffccbc,stroke:#ff5722</pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2025/06/28/swoole-process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Kalvin">
+      <meta itemprop="description" content="Golang,PHP Developer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kalvin's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2025/06/28/swoole-process/" class="post-title-link" itemprop="url">swoole 原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-06-28 08:36:15 / Modified: 08:48:36" itemprop="dateCreated datePublished" datetime="2025-06-28T08:36:15+08:00">2025-06-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="swoole-原理"><a href="#swoole-原理" class="headerlink" title="swoole 原理"></a>swoole 原理</h1><pre class="mermaid">graph TB
+    subgraph 初始化阶段
+        A[启动 Master 主进程] --> B[创建 Reactor 线程组]
+        B --> C[MainReactor 监听端口]
+        C --> D[创建 Manager 管理进程]
+    end
+
+    subgraph 进程创建阶段
+        D --> E[Fork Worker 进程]
+        D --> F[Fork TaskWorker 进程]
+        E --> G[Worker 注册事件回调]
+        F --> H[TaskWorker 阻塞等待任务]
+    end
+
+    subgraph 请求处理阶段
+        I[客户端请求] --> C
+        C --分配连接--> J[Reactor 线程]
+        J --投递请求数据--> E
+    end
+
+    subgraph 任务投递阶段
+        G --耗时任务--> K[调用 $serv->task]
+        K --投递任务数据--> F
+    end
+
+    subgraph 任务处理阶段
+        H --接收任务--> L[触发 onTask 回调]
+        L --> M[同步执行耗时逻辑]
+        M --> N[返回结果 $serv->finish]
+    end
+
+    subgraph 结果回调阶段
+        N --通知--> O[Worker 进程]
+        O --触发 onFinish 回调--> P[处理任务结果]
+    end
+
+    style 初始化阶段 fill:#e1f5fe,stroke:#039be5
+    style 进程创建阶段 fill:#ffecb3,stroke:#ffc107
+    style 请求处理阶段 fill:#c8e6c9,stroke:#4caf50
+    style 任务投递阶段 fill:#bbdefb,stroke:#2196f3
+    style 任务处理阶段 fill:#ffccbc,stroke:#ff5722
+    style 结果回调阶段 fill:#d1c4e9,stroke:#673ab7</pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2025/06/28/fpm-start-process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Kalvin">
+      <meta itemprop="description" content="Golang,PHP Developer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kalvin's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2025/06/28/fpm-start-process/" class="post-title-link" itemprop="url">PHP-FPM 启动流程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-06-28 08:01:23 / Modified: 08:37:56" itemprop="dateCreated datePublished" datetime="2025-06-28T08:01:23+08:00">2025-06-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="PHP-FPM-启动流程"><a href="#PHP-FPM-启动流程" class="headerlink" title="PHP-FPM 启动流程"></a>PHP-FPM 启动流程</h1><pre class="mermaid">graph TB
+    subgraph 初始化阶段[初始化阶段]
+        A[读取配置文件] --> B[初始化环境]
+        B --> C[创建Master进程]
+    end
+
+    subgraph Master进程[Master进程]
+        C --> D{选择进程管理模式}
+        D -->|static| E[直接创建固定数量Worker]
+        D -->|dynamic| F[创建初始Worker pm.start_servers]
+        D -->|ondemand| G[等待请求到达再创建Worker]
+        E--> H[监听端口/Socket]
+        F--> H
+        G--> H
+    end
+
+    subgraph Worker管理[Worker管理]
+        H --> I[Worker进程阻塞等待请求]
+        I --> J{请求到达?}
+        J -->|是| K[Worker接收并处理请求]
+        J -->|否| I
+        K --> L[执行PHP脚本]
+        L --> M[返回结果给Web服务器]
+        M --> I
+    end
+
+    subgraph 信号处理[信号处理]
+        N[信号事件] -->|SIGTERM| O[优雅停止服务]
+        N -->|SIGUSR2| P[重载配置]
+        O --> C
+        P --> C
+    end
+    style 初始化阶段 fill:#e1f5fe,stroke:#039be5
+    style Master进程 fill:#ffecb3,stroke:#ffc107
+    style Worker管理 fill:#c8e6c9,stroke:#4caf50
+    style 信号处理 fill:#ffcdd2,stroke:#f44336</pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2025/06/28/php-gc-principle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Kalvin">
+      <meta itemprop="description" content="Golang,PHP Developer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kalvin's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2025/06/28/php-gc-principle/" class="post-title-link" itemprop="url">PHP 垃圾回收 原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-06-28 06:43:55 / Modified: 08:07:13" itemprop="dateCreated datePublished" datetime="2025-06-28T06:43:55+08:00">2025-06-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="PHP-垃圾回收-原理"><a href="#PHP-垃圾回收-原理" class="headerlink" title="PHP 垃圾回收 原理"></a>PHP 垃圾回收 原理</h1><blockquote>
+<p>PHP 垃圾回收依赖两大部分，分别是垃圾回收器和垃圾回收算法。</p>
+</blockquote>
+<h2 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h2><p>垃圾回收器是 PHP 运行时环境提供的一种机制，用于回收不再使用的对象。</p>
+<h3 id="配置项："><a href="#配置项：" class="headerlink" title="配置项："></a>配置项：</h3><h4 id="zend-enable-gc-是否开启-GC"><a href="#zend-enable-gc-是否开启-GC" class="headerlink" title="zend.enable_gc 是否开启 GC"></a>zend.enable_gc 是否开启 GC</h4><h4 id="gc-probability-gc-运行概率-1-为-100"><a href="#gc-probability-gc-运行概率-1-为-100" class="headerlink" title="gc_probability gc 运行概率 1 为 100%"></a>gc_probability gc 运行概率 1 为 100%</h4><h4 id="gc-divisor-gc-概率分母"><a href="#gc-divisor-gc-概率分母" class="headerlink" title="gc_divisor gc 概率分母"></a>gc_divisor gc 概率分母</h4><h4 id="gc-maxlifetime-指定过了多少秒之后数据就会被视为“垃圾”并被清除"><a href="#gc-maxlifetime-指定过了多少秒之后数据就会被视为“垃圾”并被清除" class="headerlink" title="gc_maxlifetime 指定过了多少秒之后数据就会被视为“垃圾”并被清除"></a>gc_maxlifetime 指定过了多少秒之后数据就会被视为“垃圾”并被清除</h4><h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><p>PHP 垃圾回收算法是 PHP 运行时环境提供的一种算法，用于回收不再使用的对象。其中垃圾回收算法有几大概念：引用计数，循环引用检测，分代垃圾回收，标记清除法。</p>
+<h3 id="触发"><a href="#触发" class="headerlink" title="触发"></a>触发</h3><ol>
+<li>unset</li>
+</ol>
+<p>主动 unset 变量</p>
+<ol start="2">
+<li>函数返回</li>
+</ol>
+<p>函数运行结束后，return，作用域内的变量会触发 gc</p>
+<ol start="3">
+<li>脚本结束</li>
+</ol>
+<p>脚本自然运行结束，会触发 gc，释放所有变量内存</p>
+<ol start="4">
+<li>根缓冲区满</li>
+</ol>
+<p>根缓冲区大小默认为 10,000 条记录，满了后就会触发 gc 主动释放内存</p>
+<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>php 每个变量在 zend 中都有维护一个引用计数，当变量被引用时，引用计数加 1，当变量不再被引用时，引用计数减 1，当引用计数为 0 时，变量被销毁。</p>
+<h3 id="循环引用检测"><a href="#循环引用检测" class="headerlink" title="循环引用检测"></a>循环引用检测</h3><p>php 通过三色标记法【黑、灰、白】结合深度优先遍历，来识别循环引用。</p>
+<h3 id="分代垃圾回收"><a href="#分代垃圾回收" class="headerlink" title="分代垃圾回收"></a>分代垃圾回收</h3><p>把变量按存活时间分成三代，年轻代：新创建的变量 gc 扫码频率最高。中生代，存活一段时间的变量扫描频率降低。 长期存活的变量，扫码频率最低。<br>减少垃圾回收的频率，可以提高性能。</p>
+<h3 id="标记清除法"><a href="#标记清除法" class="headerlink" title="标记清除法"></a>标记清除法</h3><p>通过标记变量为白色，最后白色垃圾统一释放，提高性能。而非每个变量都进行释放，频繁向系统申请内存，也会提高性能。</p>
+<h2 id="php-垃圾回收流程"><a href="#php-垃圾回收流程" class="headerlink" title="php 垃圾回收流程"></a>php 垃圾回收流程</h2><blockquote>
+<p>代码：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$profile</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Profile</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$user</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建循环引用</span></span><br><span class="line"><span class="variable">$user</span> = <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line"><span class="variable">$profile</span> = <span class="keyword">new</span> <span class="title class_">Profile</span>();</span><br><span class="line"><span class="variable">$user</span>-&gt;profile = <span class="variable">$profile</span>;  <span class="comment">// User引用Profile</span></span><br><span class="line"><span class="variable">$profile</span>-&gt;user = <span class="variable">$user</span>;     <span class="comment">// Profile引用User</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 断开外部引用</span></span><br><span class="line"><span class="keyword">unset</span>(<span class="variable">$user</span>, <span class="variable">$profile</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="垃圾回收流程"><a href="#垃圾回收流程" class="headerlink" title="垃圾回收流程"></a>垃圾回收流程</h3><pre class="mermaid">graph TB
+        A(GC扫描开始) --> B[变量user]
+        A --> D[变量profile]
+        B --标记紫色--> C[根缓冲区]
+        D --标记紫色--> C
+    subgraph 标记阶段[标记阶段]
+        C --扫描成员--> E[标记灰色]
+    end
+    subgraph 扫描阶段[扫描阶段]
+        E --深度遍历--> F[引用计数减1]
+        F --> G{refcount==0?}
+        G --Y--> H[标记为白色垃圾]
+        G --N--> I{refcount>0?}
+        I --Y--> J[标记黑色待还原]
+    end
+    subgraph 清除阶段[清除阶段]
+        H --> K[释放白色标记变量内存]
+        H --> M[还原黑色标记的变量]
+    end
+        K --> L[清空根缓冲区,等待下一次触发,缓冲区计数归零]
+    L-->N[结束]</pre>
+
+<h3 id="引用计数变化"><a href="#引用计数变化" class="headerlink" title="引用计数变化"></a>引用计数变化</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="built_in">stdClass</span>(); <span class="comment">// 新建变量 refcount=1,is_ref=0</span></span><br><span class="line"><span class="variable">$b</span> = <span class="keyword">new</span> <span class="built_in">stdClass</span>(); <span class="comment">// 新建变量 refcount=1,is_ref=0</span></span><br><span class="line"><span class="variable">$a</span>-&gt;ref = <span class="variable">$b</span>;  <span class="comment">// 变量赋值 $b refcount=2,is_ref=1,</span></span><br><span class="line"><span class="variable">$b</span>-&gt;ref = <span class="variable">$a</span>;  <span class="comment">// 变量赋值 $a refcount=2,is_ref=1,</span></span><br><span class="line"><span class="keyword">unset</span>(<span class="variable">$a</span>, <span class="variable">$b</span>); <span class="comment">// 循环引用，refcount=1</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">gc_collect_cycles</span>(); <span class="comment">// 手动触发GC</span></span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="title function_ invoke__">gc_status</span>());</span><br><span class="line"><span class="comment">// 输出: [&quot;collected&quot; =&gt; 2] // 回收2个对象</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2025/06/28/resume-task/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Kalvin">
+      <meta itemprop="description" content="Golang,PHP Developer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kalvin's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2025/06/28/resume-task/" class="post-title-link" itemprop="url">面试任务清单</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-06-28 06:36:55 / Modified: 08:54:27" itemprop="dateCreated datePublished" datetime="2025-06-28T06:36:55+08:00">2025-06-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="面试任务"><a href="#面试任务" class="headerlink" title="面试任务"></a>面试任务</h1><ul>
+<li><input disabled="" type="checkbox"> php<ul>
+<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/28/php-gc-principle">gc 垃圾回收机制</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/28/fpm-start-process">fpm 原理</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/28/swoole-process/">swoole 原理</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/28/php-goroutine-process/">php 协程原理</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/28/laravel-process">laravel 框架原理</a></li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 设计模式</li>
+<li><input disabled="" type="checkbox"> golang<ul>
+<li><input disabled="" type="checkbox"> gc</li>
+<li><input disabled="" type="checkbox"> 协程原理</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> Redis</li>
+<li><input disabled="" type="checkbox"> MySQL</li>
+<li><input disabled="" type="checkbox"> ElasticSearch</li>
+<li><input disabled="" type="checkbox"> ClickHouse</li>
+<li><input disabled="" type="checkbox"> Kafka</li>
+<li><input disabled="" type="checkbox"> Rabbitmq</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2024/11/20/post/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -377,9 +958,13 @@ end</pre>
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
@@ -470,7 +1055,7 @@ end</pre>
 if (document.querySelectorAll('pre.mermaid').length) {
   NexT.utils.getScript('https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js', () => {
     mermaid.initialize({
-      theme    : 'forest',
+      theme    : 'neutral',
       logLevel : 3,
       flowchart: { curve     : 'linear' },
       gantt    : { axisFormat: '%m/%d/%Y' },

@@ -229,7 +229,10 @@
     <a href="/blog/2024/03/30/2024-03-30/" rel="prev" title="MySQL原理">
       <i class="fa fa-chevron-left"></i> MySQL原理
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/blog/2025/06/28/resume-task/" rel="next" title="面试任务清单">
+      面试任务清单 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -304,9 +307,13 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
@@ -397,7 +404,7 @@
 if (document.querySelectorAll('pre.mermaid').length) {
   NexT.utils.getScript('https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js', () => {
     mermaid.initialize({
-      theme    : 'forest',
+      theme    : 'neutral',
       logLevel : 3,
       flowchart: { curve     : 'linear' },
       gantt    : { axisFormat: '%m/%d/%Y' },
