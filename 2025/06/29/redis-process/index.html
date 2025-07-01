@@ -21,19 +21,19 @@
     var CONFIG = {"hostname":"simplekalvin.github.io","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="面试任务  php  gc 垃圾回收机制  fpm 原理  swoole 原理  php 协程原理  laravel 框架原理    设计模式  golang  gc  协程原理    Redis  MySQL  ElasticSearch  ClickHouse  Kafka  Rabbitmq">
+  <meta name="description" content="redis 基本概念基本数据类型Redis 有五大基本数据类型：字符串、哈希、列表、集合、有序集合。 String 字符串类型基本的数据存储单元，可以存储字符串、整数或者浮点数。 语法： 1set key value  Hash 哈希类型一个键值对集合，可以存储多个字段 语法： 1hset key field value  List 列表类型一个有序的元素集合，可以存储多个元素，并且可以按照顺序进">
 <meta property="og:type" content="article">
-<meta property="og:title" content="面试任务清单">
-<meta property="og:url" content="https://simplekalvin.github.io/blog/2025/06/28/resume-task/index.html">
+<meta property="og:title" content="redis 基本概念">
+<meta property="og:url" content="https://simplekalvin.github.io/blog/2025/06/29/redis-process/index.html">
 <meta property="og:site_name" content="Kalvin&#39;s Blog">
-<meta property="og:description" content="面试任务  php  gc 垃圾回收机制  fpm 原理  swoole 原理  php 协程原理  laravel 框架原理    设计模式  golang  gc  协程原理    Redis  MySQL  ElasticSearch  ClickHouse  Kafka  Rabbitmq">
+<meta property="og:description" content="redis 基本概念基本数据类型Redis 有五大基本数据类型：字符串、哈希、列表、集合、有序集合。 String 字符串类型基本的数据存储单元，可以存储字符串、整数或者浮点数。 语法： 1set key value  Hash 哈希类型一个键值对集合，可以存储多个字段 语法： 1hset key field value  List 列表类型一个有序的元素集合，可以存储多个元素，并且可以按照顺序进">
 <meta property="og:locale">
-<meta property="article:published_time" content="2025-06-27T22:36:55.000Z">
-<meta property="article:modified_time" content="2025-06-29T01:58:43.166Z">
+<meta property="article:published_time" content="2025-06-29T01:51:49.000Z">
+<meta property="article:modified_time" content="2025-06-29T01:57:13.583Z">
 <meta property="article:author" content="Kalvin">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://simplekalvin.github.io/blog/2025/06/28/resume-task/">
+<link rel="canonical" href="https://simplekalvin.github.io/blog/2025/06/29/redis-process/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>面试任务清单 | Kalvin's Blog</title>
+  <title>redis 基本概念 | Kalvin's Blog</title>
   
 
 
@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2025/06/28/resume-task/">
+    <link itemprop="mainEntityOfPage" href="https://simplekalvin.github.io/blog/2025/06/29/redis-process/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -169,7 +169,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          面试任务清单
+          redis 基本概念
         </h1>
 
         <div class="post-meta">
@@ -178,16 +178,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2025-06-28 06:36:55" itemprop="dateCreated datePublished" datetime="2025-06-28T06:36:55+08:00">2025-06-28</time>
+              <time title="Created: 2025-06-29 09:51:49 / Modified: 09:57:13" itemprop="dateCreated datePublished" datetime="2025-06-29T09:51:49+08:00">2025-06-29</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-06-29 09:58:43" itemprop="dateModified" datetime="2025-06-29T09:58:43+08:00">2025-06-29</time>
-              </span>
 
           
 
@@ -200,28 +194,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="面试任务"><a href="#面试任务" class="headerlink" title="面试任务"></a>面试任务</h1><ul>
-<li><input disabled="" type="checkbox"> php<ul>
-<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/28/php-gc-principle">gc 垃圾回收机制</a></li>
-<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/28/fpm-start-process">fpm 原理</a></li>
-<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/28/swoole-process/">swoole 原理</a></li>
-<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/28/php-goroutine-process/">php 协程原理</a></li>
-<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/28/laravel-process">laravel 框架原理</a></li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"> <a href="/blog/2025/06/29/design-patterns">设计模式</a></li>
-<li><input disabled="" type="checkbox"> golang<ul>
-<li><input disabled="" type="checkbox"> gc</li>
-<li><input disabled="" type="checkbox"> 协程原理</li>
-</ul>
-</li>
-<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/29/redis-process">Redis</a></li>
-<li><input checked="" disabled="" type="checkbox"> <a href="/blog/2025/06/29/mysql-process">MySQL</a></li>
-<li><input disabled="" type="checkbox"> ElasticSearch</li>
-<li><input disabled="" type="checkbox"> ClickHouse</li>
-<li><input disabled="" type="checkbox"> Kafka</li>
-<li><input disabled="" type="checkbox"> Rabbitmq</li>
-</ul>
+        <h1 id="redis-基本概念"><a href="#redis-基本概念" class="headerlink" title="redis 基本概念"></a>redis 基本概念</h1><h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><p>Redis 有五大基本数据类型：字符串、哈希、列表、集合、有序集合。</p>
+<h3 id="String-字符串类型"><a href="#String-字符串类型" class="headerlink" title="String 字符串类型"></a>String 字符串类型</h3><p>基本的数据存储单元，可以存储字符串、整数或者浮点数。</p>
+<p>语法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set key value</span><br></pre></td></tr></table></figure>
+
+<h3 id="Hash-哈希类型"><a href="#Hash-哈希类型" class="headerlink" title="Hash 哈希类型"></a>Hash 哈希类型</h3><p>一个键值对集合，可以存储多个字段</p>
+<p>语法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hset key field value</span><br></pre></td></tr></table></figure>
+
+<h3 id="List-列表类型"><a href="#List-列表类型" class="headerlink" title="List 列表类型"></a>List 列表类型</h3><p>一个有序的元素集合，可以存储多个元素，并且可以按照顺序进行添加、删除、修改、查询等操作。<br>语法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 入列 头部</span></span><br><span class="line">lpush key value</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 入列 尾部</span></span><br><span class="line">rpush key value</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取 出列 头部</span></span><br><span class="line">lpop key</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取 出列 尾部</span></span><br><span class="line">rpop key</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取 区间</span></span><br><span class="line">lrange key start stop</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取 元素索引</span></span><br><span class="line">lindex key index</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除</span></span><br><span class="line">lrem key count value</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改</span></span><br><span class="line">lset key index value</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取 长度</span></span><br><span class="line">llen key</span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-集合-又名无序集合"><a href="#Set-集合-又名无序集合" class="headerlink" title="Set 集合 又名无序集合"></a>Set 集合 又名无序集合</h3><p>一个无序集合，可以存储不重复的字符串元素。唯一性</p>
+<p>语法</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置元素</span></span><br><span class="line">sadd key value</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取元素</span></span><br><span class="line">smembers key</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除元素</span></span><br><span class="line">srem key value</span><br></pre></td></tr></table></figure>
+
+<h3 id="ZSet-集合-又名有序集合"><a href="#ZSet-集合-又名有序集合" class="headerlink" title="ZSet 集合 又名有序集合"></a>ZSet 集合 又名有序集合</h3><p>类似于集合，但是每个元素都有一个分数（score）与之关联</p>
+<p>语法:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加元素</span></span><br><span class="line">zadd key score value</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取元素</span></span><br><span class="line">zrange key start stop</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除元素</span></span><br><span class="line">zrem key value</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -237,12 +228,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/blog/2024/11/20/post/" rel="prev" title="BeegoWeb框架原理">
-      <i class="fa fa-chevron-left"></i> BeegoWeb框架原理
+    <a href="/blog/2025/06/29/design-patterns/" rel="prev" title="设计模式">
+      <i class="fa fa-chevron-left"></i> 设计模式
     </a></div>
       <div class="post-nav-item">
-    <a href="/blog/2025/06/28/php-gc-principle/" rel="next" title="PHP 垃圾回收 原理">
-      PHP 垃圾回收 原理 <i class="fa fa-chevron-right"></i>
+    <a href="/blog/2025/06/29/mysql-process/" rel="next" title="数据库原理">
+      数据库原理 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -302,7 +293,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">面试任务</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">redis 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#String-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">String 字符串类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash-%E5%93%88%E5%B8%8C%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.2.</span> <span class="nav-text">Hash 哈希类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List-%E5%88%97%E8%A1%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.3.</span> <span class="nav-text">List 列表类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-%E9%9B%86%E5%90%88-%E5%8F%88%E5%90%8D%E6%97%A0%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">1.1.4.</span> <span class="nav-text">Set 集合 又名无序集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZSet-%E9%9B%86%E5%90%88-%E5%8F%88%E5%90%8D%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">1.1.5.</span> <span class="nav-text">ZSet 集合 又名有序集合</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
